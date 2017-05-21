@@ -11,7 +11,7 @@ market-front:
 market-web:
     build: .
     volumes:
-        - "./config/php/php.ini:/etc/php/conf.d/030-custom.ini:ro"
+        - "./config/php/php.ini:/usr/local/etc/php/conf.d/030-custom.ini:ro"
         - "./www/cocorico:/var/www/market"
     links:
         - market-db
