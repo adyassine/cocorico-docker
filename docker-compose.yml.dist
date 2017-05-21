@@ -1,0 +1,30 @@
+market-front:
+    image: nginx
+    ports:
+        - "80:80"
+    links:
+        - market-web
+    volumes:
+        - "./www/demo:/var/www/demo"
+        - "./config/nginx/vhost/demo:/etc/nginx/conf.d/030-demo.conf:ro"
+
+market-web:
+    build: .
+    volumes:
+        - "./config/php/php.ini:/etc/php/conf.d/030-custom.ini:ro"
+        - "./www/demo:/var/www/demo"
+    links:
+        - market-db
+    ports:
+            - "9000:9000"
+    working_dir: "/var/www/demo"
+
+market-db:
+    image: mysql:5.7
+    ports:
+        - "3333:3306"
+    environment:
+        - "MYSQL_ROOT_PASSWORD=passroot"
+        - "MYSQL_USER=marker"
+        - "MYSQL_PASSWORD=markerPass"
+        - "MYSQL_DATABASE=market"
