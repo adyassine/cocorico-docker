@@ -18,10 +18,16 @@ Then start containers (databases and web) with docker-compose :
 $ docker-compose up -d
 ```
 
+add market.local to the hosts file :
+
+```bash
+$ sudo vi /etc/hosts  # add 127.0.0.1 market.local
+```
+
 You should now install composer dependencies :
 
 ```bash
-$ docker exec -it market-web composer install
+$ docker exec -it market_web composer install
 ```
 
 To ssh on a running container :
