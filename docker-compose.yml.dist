@@ -5,10 +5,11 @@ services:
         ports:
             - "80:80"
         links:
-            - market-web
+            - market_web
         volumes:
             - "./www/cocorico:/var/www/market"
             - "./config/nginx/vhost/market:/etc/nginx/conf.d/030-market.conf:ro"
+        container_name: market_front
 
     market_web:
         build: .
@@ -16,10 +17,12 @@ services:
             - "./config/php/php.ini:/usr/local/etc/php/conf.d/030-custom.ini:ro"
             - "./www/cocorico:/var/www/market"
         links:
-            - market-db
+            - market_db
+            - market_mongo
         ports:
                 - "9000:9000"
         working_dir: "/var/www/market"
+        container_name: market_web
 
     market_db:
         image: mysql:5.7
@@ -30,5 +33,10 @@ services:
             - "MYSQL_USER=marker"
             - "MYSQL_PASSWORD=markerPass"
             - "MYSQL_DATABASE=market"
+        container_name: market_db
 
-# @TODO :  add mongodb
+    market_mongo:
+        image: mongo:3.2
+        ports:
+            - "27019:27019"
+        container_name: market_mongo

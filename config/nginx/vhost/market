@@ -4,8 +4,7 @@ server {
     root /var/www/market/web;
 
     location / {
-        # try to serve file directly, fallback to app.php
-        try_files $uri /app.php$is_args$args;
+        try_files $uri /app_dev.php$is_args$args;
     }
 
     location ~* \.(jpg|jpeg|gif|css|png|js|ico|html|eof|woff|ttf)$ {
@@ -17,7 +16,7 @@ server {
 
     # DEV
     location ~ ^/(app_dev|config)\.php(/|$) {
-        fastcgi_pass market-web:9000;
+        fastcgi_pass market_web:9000;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
@@ -26,18 +25,13 @@ server {
 
     # PROD
     location ~ ^/app\.php(/|$) {
-        fastcgi_pass market-web:9000;
+        fastcgi_pass market_web:9000;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         fastcgi_param DOCUMENT_ROOT $realpath_root;
         internal;
     }
-
-    # return 404 for all other php files not matching the front controller
-    #location ~ \.php$ {
-        #return 404;
-    #}
 
     error_log /var/log/nginx/market_error.log;
     access_log /var/log/nginx/market_access.log;

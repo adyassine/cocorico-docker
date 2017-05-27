@@ -9,6 +9,8 @@ RUN apt-get update \
         libicu-dev \
         php5-imagick \
         zlib1g-dev \
+        php5-dev php5-cli php-pear \
+    && pecl install mongo \
     && docker-php-source extract \
     && curl -L -o /tmp/apcu-$PHP_APCU_VERSION.tgz https://pecl.php.net/get/apcu-$PHP_APCU_VERSION.tgz \
     && curl -L -o /tmp/xdebug-$PHP_XDEBUG_VERSION.tgz http://xdebug.org/files/xdebug-$PHP_XDEBUG_VERSION.tgz \
