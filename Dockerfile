@@ -9,7 +9,7 @@ RUN apt-get update \
         libicu-dev \
         php5-imagick \
         zlib1g-dev \
-        php5-dev php5-cli php-pear \
+        php5-dev php5-cli php-pear mysql-client mcrypt \
     && pecl install mongo \
     && docker-php-source extract \
     && curl -L -o /tmp/apcu-$PHP_APCU_VERSION.tgz https://pecl.php.net/get/apcu-$PHP_APCU_VERSION.tgz \
@@ -28,6 +28,8 @@ RUN apt-get update \
         mysqli \
         xdebug \
         zip \
+        pdo_mysql \
+        fileinfo \
     && docker-php-source delete \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer \
     && chmod +sx /usr/local/bin/composer \

@@ -24,6 +24,8 @@ services:
 
     market_mysql:
         image: mysql:5.7
+        volumes:
+            - "./config/mysql/my.cnf:/etc/mysql/conf.d/disable_strict_mode.cnf:ro"
         ports:
             - "3309:3306"
         environment:
